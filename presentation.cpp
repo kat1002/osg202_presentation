@@ -132,7 +132,7 @@ int FCFS(int head, Data data, vector<int>& seek_sequence){
 
 int Elevator(int head, Data data, vector<int>& seek_sequence){
     int res;
-    int distance, cur_track;
+    int distance;
     vector<int> left, right;
 
 
