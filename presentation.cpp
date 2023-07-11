@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <map>
 #include <cstdlib>
+#include <string>
 
 using namespace std;
 
@@ -29,21 +30,10 @@ void sequence(vector<int> a){
     for(int e: a) cout << e << " ";
 }
 
-vector<string> split(string str, char del){
-    string temp = "";
-    vector<string> res;
-
-      for(int i=0; i<(int)str.size(); i++){
-        if(str[i] != del){
-            temp += str[i];
-        }
-        else{
-            res.pb(temp);
-            temp = "";
-        }
-    }
-    res.pb(temp);
-    return res;
+int random(int &x, int max){
+	x = rand() % max;
+	while(x == 0) x = rand() % max;
+	return x;
 }
 
 void userInput(Data &data){
@@ -70,25 +60,25 @@ void fileInput(string path, map<int, Data>& fData){
     ifstream input(path);
     
     string line;
-    int cnt = 0;
+    lines = 0;
 
     while(!input.eof()){
         Data tmpData;
         vector<string> element;
-        getline(input, line);
-        element = split(line, ' ');
+        
+	input >> tmpData.size;
+	input >> tmpData.head;
+	input >> tmpData.seektime;
 
-        tmpData.size = stoi(element[0]);
-        tmpData.head = stoi(element[1]);
-        tmpData.seektime = stoi(element[2]);
-        
-        for(int i = 3; i < element.size(); ++i)
-            tmpData.data.pb(stoi(element[i]));
-        
-        fData.insert(pair<int, Data>(cnt, tmpData));
-        ++cnt;
+	for(int i = 0; i < tmpData.size; ++i){
+		int tmp;
+		input >> tmp;
+		tmpData.data.pb(tmp);
+	}
+       fData.insert(pair<int, Data>(lines, tmpData));
+        ++lines;
     }
-
+	lines--;	
     input.close();
 }
 
@@ -102,7 +92,7 @@ void fileOutput(string path, vector<int> fcfs, vector<int> elevator, vector<vect
     */
     
     fstream output;
-    output.open(path);
+    output.open(path, std::ofstream::out | std::ofstream::trunc);
 
     for(int i = 0; i < lines; ++i){
         string line = "";
@@ -113,31 +103,23 @@ void fileOutput(string path, vector<int> fcfs, vector<int> elevator, vector<vect
         
         line += "Elevator: " + to_string(fcfs[i]) + ", Seek sequence: ";
         for(int x : elevator_sequence[i]) line += "[" + to_string(x) + "] ";
-        line += "\n";
-
-        output<<line;
+        output << line << endl;
     }
 
     output.close();
 }
 
-void dataRandomOutput(string path, Data oData){
+void dataRandomOutput(string path, vector<string> lines){
     fstream output;
-    output.open(path);
+    output.open(path, std::ofstream::out | std::ofstream::trunc);
 
-    string line = to_string(oData.size) + " " + to_string(oData.head) + " " + to_string(oData.seektime);
-    for(int e : oData.data){
-        line += " " + to_string(e);
-    }
-    line += "\n";
-    output<<line;
+    for(string line : lines) output<<line;
+
     output.close();
 }
 
 int FCFS(int head, Data data, vector<int>& seek_sequence){
     int res = 0;
-
-    cout << "\nData: "; data.display();
 
     for(int i : data.data){
         seek_sequence.pb(i);
@@ -153,7 +135,6 @@ int Elevator(int head, Data data, vector<int>& seek_sequence){
     int distance, cur_track;
     vector<int> left, right;
 
-    cout << "\nData: "; data.display();
 
     for(int o : data.data){
         if(o > head) right.pb(o);
@@ -185,14 +166,18 @@ void cCase(){
 
     userInput(uData);
     
+    cout << "\nData: "; uData.display();
     fcfs = FCFS(uData.head, uData, seek_sequence);
     cout << "FCFS seek time: " << fcfs << endl;
     cout << "Seek sequence: "; sequence(seek_sequence);
+    cout << endl;
     seek_sequence.clear();
 
+    cout << "\nData: "; uData.display();
     elevator = Elevator(uData.head, uData, seek_sequence);
     cout << "Elevator seek time: " << elevator << endl;
     cout << "Seek sequence: "; sequence(seek_sequence); 
+    cout << endl;
     seek_sequence.clear();
 }
 
@@ -207,13 +192,12 @@ void fCase(){
     for(int i = 0; i < lines; ++i){
         vector<int> fcfs_sequence, elevator_sequence;
         
-        fcfs.pb(FCFS(fData[0].head, fData[0], fcfs_sequence));
-        elevator.pb(Elevator(fData[0].head, fData[0], elevator_sequence));
+        fcfs.pb(FCFS(fData[i].head, fData[i], fcfs_sequence));
+        elevator.pb(Elevator(fData[i].head, fData[i], elevator_sequence));
 
         fcfs_se.pb(fcfs_sequence);
         elevator_se.pb(elevator_sequence);
     }
-
     fileOutput("./output.txt", fcfs, elevator, fcfs_se, elevator_se);
 }
 
@@ -222,20 +206,32 @@ void rCase(){
     int s = 20;
     int ss = 10;
     int n;
+    vector<string> lines;
     cout << "Data random: " << endl;
-    cout << "Size: 1..20 Seektime: 1..10 Head and data inside: 1..100";
+    cout << "Size: [1..20] | Seektime: [1..10] | Head and data inside: [1..100]" << endl;;
     cout << "Enter numbers of processes: ";
     cin >> n;
 
     for(int i = 0; i < n; ++i){
         Data rData;
-        rData.size = rand() % s;
-        rData.head = rand() % N;
-        rData.seektime = rand() % s; 
-        for(int j = 0; j < rData.size; ++j) rData.data.pb(rand() % N);
+	int tmp;
 
-        dataRandomOutput("./input.txt", rData);
+	random(rData.size, s);
+	random(rData.head, N);
+	random(rData.seektime, s);	
+ 
+        for(int j = 0; j < rData.size; ++j) rData.data.pb(random(tmp, N));
+
+	string line = to_string(rData.size) + " " + to_string(rData.head) + " " + to_string(rData.seektime);
+   	for(int e : rData.data){
+       		 line += " " + to_string(e);
+    	}
+    	line += "\n";
+ 
+	lines.pb(line);
     }
+
+    dataRandomOutput("./input.txt", lines);
 }
 
 int main(){
@@ -252,8 +248,8 @@ int main(){
         do{
             cout << "Choose your option (1..3): ";
             cin >> option;
-            option--;
-        }while( option > 3  || option < 0);
+            option -= 1;
+        } while( option > 3 || option < 0);
    
         switch(option){
             case 0:
@@ -265,8 +261,12 @@ int main(){
             case 2:
                 rCase();
                 break;
+	    case 3:
+		running = false;
+		break;
             default:
-                exit;
+		running = false;
+                break;
         }
 
     }
