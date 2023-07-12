@@ -18,4 +18,4 @@ Bật Console và nhập:
   ./out.o
 ```
 
-Source code sẽ nằm trong file "presentation.cpp"
+Source code sẽ nằm trong file [presentation.cpp](presentation.cpp)
