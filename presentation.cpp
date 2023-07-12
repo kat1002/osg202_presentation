@@ -198,6 +198,9 @@ void fCase(){
         fcfs_se.pb(fcfs_sequence);
         elevator_se.pb(elevator_sequence);
     }
+
+    cout << "All calculations have been done. Please check the output in file \"output.txt\". " << endl;
+
     fileOutput("./output.txt", fcfs, elevator, fcfs_se, elevator_se);
 }
 
@@ -232,6 +235,8 @@ void rCase(){
     }
 
     dataRandomOutput("./input.txt", lines);
+	
+    cout << "All random cases have been generated. Please check file \"input.txt\" to have more infomation." << endl;
 }
 
 int main(){
@@ -241,12 +246,12 @@ int main(){
     while(running){
         cout << "Choose options: " << endl;
         cout << "   1) File Input (input.txt)" << endl;
-        cout << "   2) Custom Input" << endl;
+        cout << "   2) Console Input" << endl;
         cout << "   3) Generate random cases (after generate please choose file input options)" << endl;
         cout << "   4) Exit" << endl;        
    
         do{
-            cout << "Choose your option (1..3): ";
+            cout << "Choose your option (1..4): ";
             cin >> option;
             option -= 1;
         } while( option > 3 || option < 0);
