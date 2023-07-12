@@ -97,11 +97,11 @@ void fileOutput(string path, vector<int> fcfs, vector<int> elevator, vector<vect
     for(int i = 0; i < lines; ++i){
         string line = "";
         line += to_string(i+1) + ": \n";
-        line += "FCFS: " + to_string(fcfs[i]) + ", Seek sequence: ";
+        line += "FCFS: " + to_string(fcfs[i]) + "ms, Seek sequence: ";
         for(int x : fcfs_sequence[i]) line += "[" + to_string(x) + "] ";
         line += "\n";
         
-        line += "Elevator: " + to_string(fcfs[i]) + ", Seek sequence: ";
+        line += "Elevator: " + to_string(elevator[i]) + "ms, Seek sequence: ";
         for(int x : elevator_sequence[i]) line += "[" + to_string(x) + "] ";
         output << line << endl;
     }
@@ -122,16 +122,16 @@ int FCFS(int head, Data data, vector<int>& seek_sequence){
     int res = 0;
 
     for(int i : data.data){
-        seek_sequence.pb(i);
+	seek_sequence.pb(i);
         res += abs(head - i);
         head = i;
     }
-
+    
     return res *= data.seektime;
 }
 
 int Elevator(int head, Data data, vector<int>& seek_sequence){
-    int res;
+    int res = 0;
     int distance;
     vector<int> left, right;
 
@@ -150,8 +150,9 @@ int Elevator(int head, Data data, vector<int>& seek_sequence){
         head = o;
     }
 
-    for(int o : left){
-        seek_sequence.pb(o);
+    for(int i = left.size() - 1; i >= 0; i--){
+        int o = left[i];
+	seek_sequence.pb(o);
         res += abs(head - o);
         head = o;
     }
@@ -168,14 +169,14 @@ void cCase(){
     
     cout << "\nData: "; uData.display();
     fcfs = FCFS(uData.head, uData, seek_sequence);
-    cout << "FCFS seek time: " << fcfs << endl;
+    cout << "\nFCFS seek time: " << fcfs << "ms" << endl;
     cout << "Seek sequence: "; sequence(seek_sequence);
     cout << endl;
     seek_sequence.clear();
 
     cout << "\nData: "; uData.display();
     elevator = Elevator(uData.head, uData, seek_sequence);
-    cout << "Elevator seek time: " << elevator << endl;
+    cout << "\nElevator seek time: " << elevator << "ms" << endl;
     cout << "Seek sequence: "; sequence(seek_sequence); 
     cout << endl;
     seek_sequence.clear();
