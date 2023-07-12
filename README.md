@@ -4,10 +4,10 @@ Repo cho môn OSG202
 Chương trình mô phỏng thuật toán First Come First Search và Elevator
 (Illustration Program for FCFS and Elevator Algorithm)
 
-[!Cover](osg202/images/archlinux.png)
+![Cover](osg202/images/archlinux.png)
 
 Report:
-  - Bản báo cáo nằm ở file osg202.pdf
+  - Bản báo cáo nằm ở file [!PDF](osg202.pdf)
 
 ## Cách cài đặt
 Download và giải nén file về máy.
