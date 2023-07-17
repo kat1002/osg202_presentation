@@ -139,12 +139,14 @@
     \textbf{Disk Response Time} (Thời gian phản hồi của đĩa): Thời gian phản hồi là thời gian trung bình mà một yêu cầu sử dụng để chờ thực hiện thao tác I/O của nó. Thời gian phản hồi trung bình là thời gian phản hồi của tất cả các yêu cầu. Thời gian phản hồi phương sai là thước đo cách yêu cầu riêng lẻ được phục vụ đối với thời gian phản hồi trung bình. Vì vậy, thuật toán lập lịch đĩa cung cấp thời gian phản hồi phương sai tối thiểu sẽ tốt hơn.
 
     \includegraphics[width = 12cm]{images/disc-scheduling-algorithms.png}
+
+    Được tham khảo từ: \href{https://www.geeksforgeeks.org/disk-scheduling-algorithms/}{https://www.geeksforgeeks.org/disk-scheduling-algorithms/}
         
     \subsection{First Come First Serve (FCFS) Algorithm}
 
     \textbf{FCFS} là viết tắt của \textbf{First Come First Serve}. Trong thuật toán FCFS, công việc đến đầu tiên trong hàng đợi sẵn sàng được phân bổ cho CPU và sau đó là công việc đến thứ hai, v.v. Có thể nói rằng hàng đợi sẵn sàng hoạt động như một hàng đợi \textbf{FIFO} (Vào trước ra trước), do đó các công việc/quy trình đến được đặt ở cuối hàng đợi.  
 
-    \textbf{FCFS} là một thuật toán lập lịch không ưu tiên vì một quá trình giữ CPU cho đến khi nó kết thúc hoặc thực hiện I/O. Như vậy, nếu một công việc dài hơn đã được gán cho CPU thì nhiều công việc ngắn hơn sau nó sẽ phải đợi. Thuật toán này được sử dụng trong hầu hết các hệ điều hành hàng loạt. 
+    \textbf{FCFS} là một thuật toán lập lịch không ưu tiên vì một quá trình giữ CPU cho đến khi nó kết thúc hoặc thực hiện I/O. Như vậy, nếu một công việc dài hơn đã được gán cho CPU thì nhiều công việc ngắn hơn sau nó sẽ phải đợi. Thuật toán này được sử dụng trong hầu hết các batch operating system. 
 
     \textbf{FCFS} là thuật toán \textbf{Disk Scheduling} đơn giản nhất. Như tên gợi ý, thuật toán này xử lý các yêu cầu theo thứ tự chúng đến trong hàng đợi đĩa. Thuật toán trông rất công bằng và không có tình trạng chết (tất cả các yêu cầu đều được phục vụ tuần tự) nhưng nhìn chung, nó không cung cấp dịch vụ nhanh nhất.
 
@@ -158,7 +160,7 @@
         \item 
             Tăng tổng số lần tìm kiếm với khoảng cách này.
         \item 
-            Vị trí \textbf{track} hiện đang được bảo dưỡng giờ trở thành vị trí \textbf{head} mới.
+            Vị trí \textbf{track} hiện tại trở thành vị trí \textbf{head} mới.
         \item 
             Quay lại bước 2 cho đến khi tất cả các \textbf{tracks} trong mảng \textbf{Requests} được thực thi hết.
     \end{enumerate}
@@ -185,7 +187,8 @@
 
     \includegraphics[width = 12cm]{images/fcfs/fcfs-1.jpg}
 
-    
+    Được tham khảo từ: \href{https://www.geeksforgeeks.org/fcfs-scheduling-full-form/}{https://www.geeksforgeeks.org/fcfs-scheduling-full-form/},
+    \href{https://www.geeksforgeeks.org/fcfs-disk-scheduling-algorithms/}{https://www.geeksforgeeks.org/fcfs-disk-scheduling-algorithms/}
         
     \subsection{Elevator Algorithm}
 
@@ -237,6 +240,8 @@
     Biểu đồ sau đây cho thấy trình tự các \textbf{track} được thực hiện bằng \textbf{Elevator Algorithm}. 
 
     \includegraphics[width = 12cm]{images/elevator/ele-1.jpg}
+
+    Được tham khảo từ: \href{https://www.geeksforgeeks.org/scan-elevator-disk-scheduling-algorithms/}{https://www.geeksforgeeks.org/scan-elevator-disk-scheduling-algorithms/}
     
 \chapter{Chương trình}
     \section{Cài đặt và chạy}
