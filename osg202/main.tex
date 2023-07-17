@@ -506,21 +506,21 @@ void rCase(){
 
     for(int i = 0; i < n; ++i){
         Data rData;
-	int tmp;
+        int tmp;
 
-	random(rData.size, s);
-	random(rData.head, N);
-	random(rData.seektime, s);	
+        random(rData.size, s);
+        random(rData.head, N);
+        random(rData.seektime, s);	
  
         for(int j = 0; j < rData.size; ++j) rData.data.pb(random(tmp, N));
 
 	string line = to_string(rData.size) + " " + to_string(rData.head) + " " + to_string(rData.seektime);
-   	for(int e : rData.data){
-       		 line += " " + to_string(e);
-    	}
-    	line += "\n";
  
-	lines.pb(line);
+        for(int e : rData.data)
+            line += " " + to_string(e);
+        line += "\n";
+ 
+        lines.pb(line);
     }
 
     dataRandomOutput("./input.txt", lines);
